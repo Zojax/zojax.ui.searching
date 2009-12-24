@@ -1,0 +1,31 @@
+<div class="z-portlet portlet-search" i18n:domain="zojax.ui.searching"
+     tal:define="search_url string:${context/contextUrl}/search.html">
+  <h2 class="z-portlet-header" i18n:translate="">Search</h2>
+  <div class="z-portlet-body">
+    <div class="z-portlet-item">
+      <form tal:attributes="action search_url" method="get">
+  <div class="z-form-field">
+          <input type="text" name="form.widgets.text"
+     title="Search query" i18n:attributes="title" />
+  </div>
+  <input type="hidden" name="form.widgets.fromRoot:list"
+         value="true" tal:condition="context/fromRoot" />
+  <div class="z-form-field" tal:condition="not:context/isSite"
+       id="portal-search-in-section">
+          <input type="checkbox"
+     name="form.widgets.currentLocation:list" value="true" />
+          Only in this section
+  </div>
+  <div class="z-form-controls">
+          <input type="submit"
+     class="z-form-button"
+     name="form.buttons.search"
+     value="Find" i18n:attributes="value" />
+  </div>
+      </form>
+    </div>
+  </div>
+  <div class="z-portlet-footer">
+    <a tal:attributes="href search_url" i18n:translate="">Advanced search</a>
+  </div>
+</div>
