@@ -1,0 +1,37 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="zojax.ui.searching">
+
+  <zojax:configlet
+     name="ui.search"
+     title="Search"
+     schema=".interfaces.ISearchConfiglet"
+     description="Search form settings for site."
+     permission="zojax.Configure">
+    <require
+       permission="zope.Public"
+       interface=".interfaces.ISearchConfiglet" />
+  </zojax:configlet>
+
+  <zojax:pagelet
+     name="search.html"
+     for="*"
+     class=".search.SearchForm"
+     template="search.pt"
+     permission="zope.Public" />
+
+  <zojax:portlet
+     name="searching"
+     title="Search"
+     description="Content searching entry"
+     class=".portlet.SearchPortlet"
+     schema=".interfaces.ISearchPortlet"/>
+
+  <zojax:pagelet
+     type="portlet.view"
+     template="portlet.pt"
+     for=".portlet.SearchPortlet" />
+
+</configure>

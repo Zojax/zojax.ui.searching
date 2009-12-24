@@ -1,0 +1,46 @@
+<tal:block condition="view/searchDone" define="results view/results"
+           i18n:domain="zojax.ui.searching">
+
+  <h1 class="z-content-title" i18n:translate="">Search results</h1>
+  <div class="z-page-description"></div>
+
+  <div tal:condition="not:results">
+    <p><strong i18n:translate="">No results were found.</strong></p>
+  </div>
+
+  <div tal:condition="results">
+    <strong i18n:translate="">
+      <tal:block i18n:name="results" tal:content="view/total" />
+      item(s) matching your criteria.
+    </strong>
+    <br /><br />
+
+    <tal:block content="structure view/results/@@pagelet/batch.view" />
+
+    <dl>
+      <tal:block tal:repeat="item results">
+	<tal:block tal:define="info python:view.getInfo(item)">
+	  <dt>
+	    <tal:block tal:content="structure item/@@zmi_icon|nothing" />
+	    <a href="#" tal:content="info/title"
+               tal:attributes="href string:${item/@@absolute_url}/" />
+	    <span class="discreet" i18n:translate="">
+              by <tal:block i18n:name="owner" tal:content="info/owner" />,
+              <tal:block i18n:name="modified"
+			 tal:content="structure info/modified" />
+	    </span>
+	  </dt>
+	  <dd tal:content="info/description">Description</dd>
+	</tal:block>
+      </tal:block>
+    </dl>
+  </div>
+  <br />
+  <div class="z-form-controls">
+    <hr />
+    <input type="button" onclick="javascript:window.location='search.html'"
+	   class="z-form-button" value="Search again" />
+  </div>
+</tal:block>
+
+<tal:block condition="not:view/searchDone" replace="structure view/@@pagelet/form.view" />
