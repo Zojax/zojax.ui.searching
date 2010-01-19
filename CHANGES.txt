@@ -1,28 +1,8 @@
-=======
-CHANGES
-=======
-
-0.2.1 (Unreleased)
+1.0.2 (Unreleased)
 ------------------
 
 
-0.2.0 (2009-09-07)
+1.0.1 (2010-01-19)
 ------------------
 
-- Added possibility to search from root portal not from current site
-
-- Catch NotImplementedError
-
-- Copyright changed to 'Zope Foundation and Contributors'
-
-
-0.1.0 (2009-03-27)
-------------------
-
-- Adapted to modern zojax framework.
-
-- Add support for location-based search.
-
-- Fixed error hanlding
-
-- batching added
+- zojax initial release
