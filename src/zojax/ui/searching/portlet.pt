@@ -1,6 +1,6 @@
 <div class="z-portlet portlet-search" i18n:domain="zojax.ui.searching"
      tal:define="search_url string:${context/contextUrl}/search.html">
-  <h2 class="z-portlet-header" i18n:translate="">Search</h2>
+  <h2 class="z-portlet-header" i18n:translate="" tal:content="python:context.label is None and context.title or context.label">Title</h2>
   <div class="z-portlet-body">
     <div class="z-portlet-item">
       <form tal:attributes="action search_url" method="get">

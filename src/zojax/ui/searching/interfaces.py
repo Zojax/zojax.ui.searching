@@ -66,3 +66,7 @@ class ISearchForm(ISearchLocation):
 
 class ISearchPortlet(ISearchLocation):
     """search portlet"""
+    
+    label = schema.TextLine(title=_(u'Label'),
+                            required=False)
+
