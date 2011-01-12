@@ -11,6 +11,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+from zojax.content.type.interfaces import IItem
 """
 
 $Id$
@@ -112,6 +113,7 @@ class SearchForm(PageletForm):
 
     def getInfo(self, item):
         dc = IDCTimes(item)
+        item = IItem(item, None)
         ownership = IOwnership(item, None)
         if (ownership is None) or (not ownership.ownerId):
             owner = _('Unknown')
@@ -122,7 +124,7 @@ class SearchForm(PageletForm):
                 owner = ownership.ownerId
 
         info = {'owner': owner,
-                'title': item.title or item.__name__,
+                'title': getattr(item, 'title') or item.__name__,
                 'description': item.description,
                 'modified': dc.modified and self.formatter.format(dc.modified) or '---'}
 
