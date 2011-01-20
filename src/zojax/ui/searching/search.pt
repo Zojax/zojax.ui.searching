@@ -23,7 +23,7 @@
 	  <dt>
 	    <tal:block tal:content="structure item/@@zmi_icon|nothing" />
 	    <a href="#" tal:content="info/title"
-               tal:attributes="href string:${item/@@absolute_url}/" />
+               tal:attributes="href ${info/url}" />
 	    <span class="discreet" i18n:translate="">
               by <tal:block i18n:name="owner" tal:content="info/owner" />,
               <tal:block i18n:name="modified"
