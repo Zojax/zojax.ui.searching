@@ -148,3 +148,4 @@ class SearchForm(PageletForm):
             if context in shortcuts:
                 return '%s/%s'%(contextURL, "/".join(path))
             path.append(parent.__name__)
+        return '%s/%s'%(contextURL, "/".join(path))
