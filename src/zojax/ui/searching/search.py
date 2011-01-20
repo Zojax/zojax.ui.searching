@@ -139,14 +139,16 @@ class SearchForm(PageletForm):
         return info
     
     def getURL(self, item):
-        parents = getParents(item)
-        context = getattr(self.context, "__shortcut__", self.context)
-        contextURL = absoluteURL(self.context, self.request)
-        path = [item.__name__]
-        for parent in parents:
-            shortcuts = IShortcuts(parent, {}).items() or [parent]
-            if context in shortcuts or self.context in shortcuts:
-                return '%s/%s'%(contextURL, "/".join(reversed(path)))
-            if parent.__name__:
-                path.append(parent.__name__)
-        return '%s/%s'%(contextURL, "/".join(reversed(path)))
+        if self.currentLocation:
+            parents = getParents(item)
+            context = getattr(self.context, "__shortcut__", self.context)
+            contextURL = absoluteURL(self.context, self.request)
+            path = [item.__name__]
+            for parent in parents:
+                shortcuts = IShortcuts(parent, {}).items() or [parent]
+                if context in shortcuts or self.context in shortcuts:
+                    return '%s/%s'%(contextURL, "/".join(reversed(path)))
+                if parent.__name__:
+                    path.append(parent.__name__)
+            return '%s/%s'%(contextURL, "/".join(reversed(path)))
+        return "%s/"%absoluteURL(item, self.request)
