@@ -144,7 +144,7 @@ class SearchForm(PageletForm):
         contextURL = absoluteURL(self.context, self.request)
         path = []
         for parent in [item] + parents:
-            shortcuts = IShortcuts(parent, {}).items()
+            shortcuts = IShortcuts(parent, {}).items() or [parent]
             if context in shortcuts:
                 return '%s/%s'%(contextURL, "/".join(path))
             path.append(parent.__name__)
