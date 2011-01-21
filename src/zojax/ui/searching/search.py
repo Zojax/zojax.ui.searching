@@ -23,7 +23,7 @@ from zope.app.component.interfaces import ISite
 from zope.index.text.parsetree import ParseError
 from zope.proxy import removeAllProxies
 from zope.traversing.browser.absoluteurl import absoluteURL
-from zope.traversing.api import getParents
+from zope.traversing.api import getParents, getPath
 
 from z3c.form import button, form, interfaces
 
@@ -139,16 +139,23 @@ class SearchForm(PageletForm):
         return info
     
     def getURL(self, item):
-        if self.currentLocation:
-            parents = getParents(item)
-            context = getattr(self.context, "__shortcut__", self.context)
-            contextURL = absoluteURL(self.context, self.request)
-            path = [item.__name__]
-            for parent in parents:
-                shortcuts = IShortcuts(parent, {}).items() or [parent]
-                if context in shortcuts or self.context in shortcuts:
-                    return '%s/%s'%(contextURL, "/".join(reversed(path)))
-                if parent.__name__:
-                    path.append(parent.__name__)
-            return '%s/%s'%(contextURL, "/".join(reversed(path)))
-        return "%s/"%absoluteURL(item, self.request)
+        request = self.request
+        parents = getParents(item)
+        def getItemParentThreads(item):
+            res = []
+            parents = []
+            for parent in [item]+getParents(item):
+                for shortcut in IShortcuts(parent, {}).items():
+                    res.append(parents + [shortcut]+ getParents(shortcut))
+                parents.append(parent)
+            res.append(parents)
+            def getUrl(items):
+                items = filter(lambda y: not ISite.providedBy(y), items)
+                items.reverse()
+                return "%s/%s"%(absoluteURL(items[0], request), "/".join(map(lambda x: x.__name__, items[1:])))
+            return map(lambda x: getUrl(x), res)
+        contextURL = absoluteURL(self.context, self.request)
+        try:
+            return filter(lambda x: contextURL in x, getItemParentThreads(item))[0]
+        except IndexError:
+            return absoluteURL(item, request)
