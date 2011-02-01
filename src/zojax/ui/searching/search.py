@@ -140,7 +140,10 @@ class SearchForm(PageletForm):
     
     def getURL(self, item):
         request = self.request
-        parents = getParents(item)
+        try:
+            parents = getParents(item)
+        except TypeError:
+            return '#'
         def getItemParentThreads(item):
             res = []
             parents = []
