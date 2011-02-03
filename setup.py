@@ -64,7 +64,8 @@ setup(name = 'zojax.ui.searching',
                           'zojax.layoutform',
                           'zojax.statusmessage',
                           'zojax.widget.checkbox',
-                          'zojax.content.shortcut'
+                          'zojax.content.shortcut',
+                          'zojax.content.textannotation'
                           ],
       extras_require = dict(test=['zope.app.testing',
                                   'zope.testing',

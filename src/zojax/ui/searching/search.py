@@ -16,7 +16,7 @@
 $Id$
 """
 from zope import interface
-from zope.component import getUtility
+from zope.component import getUtility, getMultiAdapter
 from zope.dublincore.interfaces import IDCTimes
 from zope.app.component.hooks import getSite
 from zope.app.component.interfaces import ISite
@@ -36,6 +36,7 @@ from zojax.statusmessage.interfaces import IStatusMessage
 from zojax.portal.interfaces import IPortal
 from zojax.content.type.interfaces import IItem
 from zojax.content.shortcut.interfaces import IShortcuts
+from zojax.content.textannotation.interfaces import ITextAnnotation
 
 from interfaces import _, ISearchForm, ISearchConfig
 
@@ -119,7 +120,9 @@ class SearchForm(PageletForm):
         self.currentLocation = data.get('currentLocation')
 
     def getInfo(self, item):
+        request = self.request
         dc = IDCTimes(item)
+        description = getMultiAdapter((item, request), ITextAnnotation).getText()
         item = IItem(item, None)
         ownership = IOwnership(item, None)
         if (ownership is None) or (not ownership.ownerId):
@@ -132,7 +135,7 @@ class SearchForm(PageletForm):
 
         info = {'owner': owner,
                 'title': getattr(item, 'title') or item.__name__,
-                'description': item.description,
+                'description': description,
                 'url': self.getURL(item),
                 'modified': dc.modified and self.formatter.format(dc.modified) or '---'}
 
