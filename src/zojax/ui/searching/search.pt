@@ -39,6 +39,7 @@
   <div class="z-form-controls">
     <hr />
     <input type="button" onclick="javascript:window.location='search.html'"
+           i18n:attributes="value"
 	   class="z-form-button" value="Search again" />
   </div>
 </tal:block>
