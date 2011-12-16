@@ -2,7 +2,10 @@
    xmlns="http://namespaces.zope.org/zope"
    xmlns:zojax="http://namespaces.zope.org/zojax"
    xmlns:browser="http://namespaces.zope.org/browser"
+   xmlns:i18n="http://namespaces.zope.org/i18n"
    i18n_domain="zojax.ui.searching">
+
+  <i18n:registerTranslations directory="locales" />
 
   <zojax:configlet
      name="ui.search"
